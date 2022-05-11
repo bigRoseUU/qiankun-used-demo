@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="root w-[100vw] h-[100vh] relative">
     <header class="topbar flex justify-start items-center">
@@ -9,7 +11,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { DEFAULT_APP_CONTAINER } from "@root/const/qiankun";
+import { DEFAULT_APP_CONTAINER } from '@root/const/qiankun'
 </script>
 
 <style lang="less">

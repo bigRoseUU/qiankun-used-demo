@@ -1,10 +1,12 @@
-import "@root/utils/import-tailwind.css";
+/** @format */
 
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import bootstrap from "./bootstrap-apps";
+import '@root/utils/import-tailwind.css'
 
-createApp(App).use(router).mount("#app");
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import bootstrap from './bootstrap-apps'
 
-bootstrap();
+createApp(App).use(router).mount('#app')
+
+bootstrap()

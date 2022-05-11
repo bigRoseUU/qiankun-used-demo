@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "s": "sh scripts/serve-app.sh",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint"
   },
   "workspaces": [
     "packages/*"

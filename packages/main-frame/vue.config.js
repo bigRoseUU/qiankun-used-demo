@@ -1,7 +1,9 @@
-const generateConfig = require("../../build/generate-config");
-const { name } = require("./package");
+/** @format */
+
+const generateConfig = require('../../build/generate-config')
+const { name } = require('./package')
 
 /**
  * @type {import('@vue/cli-service').ProjectOptions}
  */
-module.exports = generateConfig({ process, __dirname, name }, {});
+module.exports = generateConfig({ process, __dirname, name }, {})
