@@ -1,7 +1,7 @@
 /** @format */
 
 import { registerMicroApps, start } from 'qiankun'
-import { DEFAULT_APP_CONTAINER } from '@root/const/qiankun'
+import { DEFAULT_APP_CONTAINER, EXCLUDE_ASSET } from '@root/const/qiankun'
 
 const getActiveRule = (hash: string) => (location: Location) => location.hash.startsWith(hash)
 
@@ -22,7 +22,13 @@ async function bootstrap() {
     })),
   )
 
-  start()
+  start({
+    excludeAssetFilter: (assetUrl: string) => {
+      if (EXCLUDE_ASSET.some(url => url.includes(assetUrl))) return true
+
+      return false
+    },
+  })
 }
 
 export default bootstrap

@@ -3,7 +3,12 @@
 <template>
   <div class="root w-[100vw] h-[100vh] relative">
     <header class="topbar flex justify-start items-center">
-      <div class="text-3xl text-emerald-600 pl-10">qiankun demo</div>
+      <div class="text-3xl text-emerald-600 pl-10">
+        <router-link to="/home">qiankun demo</router-link>
+      </div>
+      <div class="app-links ml-10">
+        <router-link to="/app-1" class="text-xl">app-1</router-link>
+      </div>
     </header>
     <div class="content relative w-full h-full overflow-auto">
       <!-- 通过当前的路由匹配判断是否显示子应用 -->

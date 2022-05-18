@@ -1,20 +1,18 @@
-把dll地址插入到html中
-构建应用 main-frame
-use ModuleFederationPlugin
+构建应用 common
 {
   mode: 'production',
-  context: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame',
+  context: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common',
   devtool: 'source-map',
   output: {
     hashFunction: 'xxhash64',
-    path: '/Users/linjiamin/personald-demo/vue-qiankun-demo/dist/main-frame',
+    path: '/Users/linjiamin/personald-demo/vue-qiankun-demo/dist/common',
     filename: 'js/[name].[contenthash:8].js',
-    publicPath: 'main-frame/',
+    publicPath: 'common/',
     chunkFilename: 'js/[name].[contenthash:8].js'
   },
   resolve: {
     alias: {
-      '@': '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/src',
+      '@': '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/src',
       vue$: 'vue/dist/vue.runtime.esm-bundler.js',
       '@root': '/Users/linjiamin/personald-demo/vue-qiankun-demo/'
     },
@@ -30,7 +28,7 @@ use ModuleFederationPlugin
     ],
     modules: [
       'node_modules',
-      '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/node_modules',
+      '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/node_modules',
       '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/@vue/cli-service/node_modules'
     ]
   },
@@ -39,7 +37,7 @@ use ModuleFederationPlugin
       '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/@vue/cli-plugin-typescript/node_modules',
       '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/@vue/cli-plugin-babel/node_modules',
       'node_modules',
-      '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/node_modules',
+      '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/node_modules',
       '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/@vue/cli-service/node_modules'
     ]
   },
@@ -66,8 +64,8 @@ use ModuleFederationPlugin
           {
             loader: '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/vue-loader/dist/index.js',
             options: {
-              cacheDirectory: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/node_modules/.cache/vue-loader',
-              cacheIdentifier: '35e10e94',
+              cacheDirectory: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/node_modules/.cache/vue-loader',
+              cacheIdentifier: '2fab7f2f',
               babelParserPlugins: [
                 'jsx',
                 'classProperties',
@@ -1202,8 +1200,8 @@ use ModuleFederationPlugin
             loader: '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/babel-loader/lib/index.js',
             options: {
               cacheCompression: false,
-              cacheDirectory: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/node_modules/.cache/babel-loader',
-              cacheIdentifier: 'b28e4a62'
+              cacheDirectory: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/node_modules/.cache/babel-loader',
+              cacheIdentifier: '9c8adb0e'
             }
           }
         ]
@@ -1262,23 +1260,7 @@ use ModuleFederationPlugin
   },
   optimization: {
     realContentHash: false,
-    splitChunks: {
-      cacheGroups: {
-        defaultVendors: {
-          name: 'chunk-vendors',
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          chunks: 'initial'
-        },
-        common: {
-          name: 'chunk-common',
-          minChunks: 2,
-          priority: -20,
-          chunks: 'initial',
-          reuseExistingChunk: true
-        }
-      }
-    },
+    splitChunks: false,
     minimizer: [
       /* config.optimization.minimizer('terser') */
       new TerserPlugin(
@@ -1349,7 +1331,7 @@ use ModuleFederationPlugin
       {
         'process.env': {
           NODE_ENV: '"production"',
-          BASE_URL: '"main-frame/"'
+          BASE_URL: '"common/"'
         }
       }
     ),
@@ -1376,13 +1358,10 @@ use ModuleFederationPlugin
     /* config.plugin('html') */
     new HtmlWebpackPlugin(
       {
-        title: 'main-frame',
+        title: 'common',
         scriptLoading: 'defer',
         templateParameters: function () { /* omitted long function */ },
-        template: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/public/index.html',
-        externalUrls: [
-          'dll/vue3.dll.js'
-        ]
+        template: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/public/index.html'
       }
     ),
     /* config.plugin('copy') */
@@ -1390,14 +1369,14 @@ use ModuleFederationPlugin
       {
         patterns: [
           {
-            from: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/public',
-            to: '/Users/linjiamin/personald-demo/vue-qiankun-demo/dist/main-frame',
+            from: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/public',
+            to: '/Users/linjiamin/personald-demo/vue-qiankun-demo/dist/common',
             toType: 'dir',
             noErrorOnMissing: true,
             globOptions: {
               ignore: [
                 '**/.DS_Store',
-                '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/public/index.html'
+                '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/public/index.html'
               ]
             },
             info: {
@@ -1417,10 +1396,10 @@ use ModuleFederationPlugin
           '.ts',
           '.tsx'
         ],
-        cwd: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame',
+        cwd: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common',
         cache: true,
-        cacheLocation: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame/node_modules/.cache/eslint/d08d5aac.json',
-        context: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/main-frame',
+        cacheLocation: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/node_modules/.cache/eslint/41bc4fba.json',
+        context: '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common',
         failOnWarning: false,
         failOnError: true,
         eslintPath: '/Users/linjiamin/personald-demo/vue-qiankun-demo/node_modules/eslint',
@@ -1447,18 +1426,11 @@ use ModuleFederationPlugin
     /* config.plugin('module-federation-plugin') */
     new ModuleFederationPlugin(
       {
-        name: 'appMain',
+        name: 'common',
         filename: 'remoteEntry.js',
-        shared: {
-          vue: {
-            singleton: true
-          },
-          'vue-router': {
-            singleton: true
-          }
-        },
-        remotes: {
-          common: 'common@http://localhost:12000/remoteEntry.js'
+        exposes: {
+          './components/device-detail': '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/src/components/device-detail',
+          './components/location-picker': '/Users/linjiamin/personald-demo/vue-qiankun-demo/packages/common/src/components/location-picker'
         }
       }
     ),

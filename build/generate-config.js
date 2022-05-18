@@ -2,6 +2,8 @@
 
 const path = require('path')
 const { defineConfig } = require('@vue/cli-service')
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin')
+const { ModuleFederationPlugin } = require('webpack').container
 
 const resolve = dir => {
   return path.join(__dirname, '.', dir)
@@ -11,12 +13,13 @@ const resolve = dir => {
  * @type {() => import('@vue/cli-service').ProjectOptions}
  */
 module.exports = function (meta, extraConfig = {}) {
-  let { name: appName, isChild, process } = meta
+  let { name: appName, projectType, process, __dirname: appDirname } = meta
+  let { chainWebpack } = extraConfig
   const isProduction = process.env.NODE_ENV === 'production'
 
   return defineConfig({
     transpileDependencies: true,
-    publicPath: isProduction ? `./${appName}/` : `./`,
+    publicPath: projectType !== 'child' ? (isProduction ? `./${appName}/` : './') : `./`,
     outputDir: resolve(`../dist/${appName}`),
     css: {
       loaderOptions: {
@@ -32,6 +35,7 @@ module.exports = function (meta, extraConfig = {}) {
         },
       },
     },
+    ...extraConfig,
     chainWebpack: config => {
       console.log('构建应用', meta.name)
 
@@ -41,9 +45,53 @@ module.exports = function (meta, extraConfig = {}) {
         'Access-Control-Allow-Origin': '*',
       })
 
-      if (isChild) {
+      let componentList = ['device-detail', 'location-picker']
+
+      // 将要用qiankun加载的应用改为库方式打包。
+      if (projectType === 'child') {
+        console.log('子应用使用库模式打包', appName)
         config.output.library(`${appName}-[name]`).libraryTarget('umd')
       }
+
+      // 配置模块联邦
+      if (projectType === 'common') {
+        config.plugin('module-federation-plugin').use(ModuleFederationPlugin, [
+          {
+            name: 'common',
+            filename: 'remoteEntry.js',
+            exposes: componentList.reduce((pre, cur) => {
+              pre[`./components/${cur}`] = path.resolve(appDirname, `src/components/${cur}`)
+
+              return pre
+            }, {}),
+            // shared: shareConfig, // 在微前端模式下，如果使用了共享库，在同时加载两个子应用会出现错误。所以不使用这个，用 Dll 的方式代替。
+          },
+        ])
+      } else {
+        console.log('use ModuleFederationPlugin')
+        config.plugin('module-federation-plugin').use(ModuleFederationPlugin, [
+          {
+            name: appName,
+            // shared: shareConfig,
+            remotes: {
+              common: isProduction ? 'common@common/remoteEntry.js' : 'common@http://localhost:12000/remoteEntry.js',
+            },
+          },
+        ])
+      }
+
+      if (isProduction) {
+        // 配置
+        config.plugin('dllReference').use(DllReferencePlugin, [
+          {
+            // 描述 vue3 动态链接库的文件内容
+            manifest: require('./dll-manifest/vue3.manifest.json'),
+          },
+        ])
+      }
+
+      // 导入项目自定义配置
+      chainWebpack && chainWebpack(config)
     },
   })
 }
