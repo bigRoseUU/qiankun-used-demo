@@ -45,8 +45,6 @@ module.exports = function (meta, extraConfig = {}) {
         'Access-Control-Allow-Origin': '*',
       })
 
-      let componentList = ['device-detail', 'location-picker']
-
       // 将要用qiankun加载的应用改为库方式打包。
       if (projectType === 'child') {
         console.log('子应用使用库模式打包', appName)
@@ -55,10 +53,13 @@ module.exports = function (meta, extraConfig = {}) {
 
       // 配置模块联邦
       if (projectType === 'common') {
+        let componentList = ['device-detail', 'location-picker'] // 目前先这样配置，后期可优化读取组件列表的方式
+
         config.plugin('module-federation-plugin').use(ModuleFederationPlugin, [
           {
             name: 'common',
             filename: 'remoteEntry.js',
+            // 以组件为粒度进行输出，实现按需加载。
             exposes: componentList.reduce((pre, cur) => {
               pre[`./components/${cur}`] = path.resolve(appDirname, `src/components/${cur}`)
 

@@ -13,10 +13,5 @@ module.exports = generateConfig(
         splitChunks: false, // 如果要使用 module-federation-plugin ，要这样设置。
       },
     },
-    chainWebpack: config => {
-      config.devServer.headers({
-        'Access-Control-Allow-Origin': '*',
-      })
-    },
   },
 )
