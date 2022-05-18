@@ -14,10 +14,6 @@
 import { defineAsyncComponent } from 'vue'
 
 const DeviceDetail = defineAsyncComponent(() => import('common/components/device-detail'))
-
-// window['bcd'] = 'bcd'
-
-// console.log(window['bcd'])
 </script>
 
 <style></style>

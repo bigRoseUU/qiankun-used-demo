@@ -10,7 +10,6 @@ module.exports = generateConfig(
     publicPath: isProduction ? './common/' : 'auto',
     configureWebpack: {
       optimization: {
-        // runtimeChunk: false,
         splitChunks: false, // 如果要使用 module-federation-plugin ，要这样设置。
       },
     },

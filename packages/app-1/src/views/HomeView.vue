@@ -11,8 +11,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 
-console.log(window)
-
 const DeviceDetail = defineAsyncComponent(() => import('common/components/device-detail'))
 </script>
 

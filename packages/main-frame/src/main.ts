@@ -1,10 +1,11 @@
 /** @format */
+import '@root/utils/import-tailwind.css'
 
-fetch('./common-version.json').then(async data => {
-  let versionData = await data.json()
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import bootstrap from './bootstrap-apps'
 
-  console.log('versionData', versionData)
-})
+createApp(App).use(router).mount('#app')
 
-// 异步加载，否则使用webpack的mf功能会报错
-import('./bootstrap-main')
+bootstrap()

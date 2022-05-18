@@ -24,7 +24,7 @@ async function bootstrap() {
 
   start({
     excludeAssetFilter: (assetUrl: string) => {
-      if (EXCLUDE_ASSET.some(url => url.includes(assetUrl))) return true
+      if (EXCLUDE_ASSET.some(url => assetUrl.includes(url))) return true
 
       return false
     },

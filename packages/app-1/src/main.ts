@@ -1,14 +1,13 @@
 /** @format */
 
 import './public-path'
+import render from './bootstrap'
 
 let instance: any = null
 
 // 独立运行时
 if (!window.__POWERED_BY_QIANKUN__) {
-  import('./bootstrap').then(data => {
-    data.default()
-  })
+  render()
 }
 
 export async function bootstrap() {
@@ -17,9 +16,7 @@ export async function bootstrap() {
 
 export async function mount(props: any) {
   console.log('[vue] props from main framework', props)
-  import('./bootstrap').then(async data => {
-    instance = await data.default(props)
-  })
+  render(props)
 }
 
 export async function unmount() {
