@@ -3,7 +3,7 @@
 <template>
   <div>app-1 home</div>
   <div>
-    <div>引用公用组件</div>
+    <div>引用公用组件22</div>
     <DeviceDetail></DeviceDetail>
   </div>
 </template>

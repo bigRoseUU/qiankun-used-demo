@@ -89,6 +89,10 @@ module.exports = function (meta, extraConfig = {}) {
             manifest: require('./dll-manifest/vue3.manifest.json'),
           },
         ])
+
+        config.cache({
+          type: 'filesystem',
+        })
       }
 
       // 导入项目自定义配置
